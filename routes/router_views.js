@@ -2,114 +2,22 @@
 
 // Simulação de banco de dados baseado em JSON
 
+// var db = global
+
+// db.interested = []
+// db.property = []
+// db.contracts = []
+// db.novoContrato = 0
+
 var db = global
 
-db.interested = []
-db.property = []
-db.contracts = []
-db.novoContrato = 0
+db.conversation = []
 
 function getRandomArbitrary(min, max) {
 
   return Math.floor(Math.random() * (max - min) + min)
 
 }
-
-// function populateDb(){
-
-//   db.property.push(
-//     {
-//       id: 1,
-//       endereco: 'Rua Capitão Macedo, 42 - Vila Clementino',
-//       valor: 3000,
-//       alugado: false,
-//       capacity: 3,
-//       contrato: ''
-//     },
-//     {
-//       id: 2,
-//       endereco: 'Rua Arnold Astor Ferreira, 158 - Morumbi',
-//       valor: 4200,
-//       alugado: true,
-//       capacity: 3,
-//       contrato: ''
-//     },
-//     {
-//       id: 3,
-//       endereco: 'Avenida Joao Dias, 56 - Ana Rosa',
-//       valor: 3000,
-//       alugado: false,
-//       capacity: 2,
-//       contrato: ''
-//     },
-//     {
-//       id: 4,
-//       endereco: 'Rua Elionor Arantes, 1852 - Santo Amaro',
-//       valor: 1500,
-//       alugado: false,
-//       capacity: 2,
-//       contrato: ''
-//     },
-//     {
-//       id: 5,
-//       endereco: 'Rua Antonio Gilmedes, 147 - Jabaquara',
-//       valor: 2200,
-//       alugado: true,
-//       capacity: 3,
-//       contrato: ''
-//     },
-//     {
-//       id: 6,
-//       endereco: 'Avenida Sergio Lobo, 23 - Jabaquara',
-//       valor: 1620,
-//       alugado: true,
-//       capacity: 2,
-//       contrato: ''
-//     },
-//     {
-//       id: 7,
-//       endereco: 'Rua Tartaruga, 266 - São Caetano',
-//       valor: 3900,
-//       alugado: false,
-//       capacity: 4,
-//       contrato: ''
-//     },
-//     {
-//       id: 8,
-//       endereco: 'Rua Bundança, 39 - Tatuapé',
-//       valor: 2500,
-//       alugado: true,
-//       capacity: 3,
-//       contrato: ''
-//     },
-//     {
-//       id: 9,
-//       endereco: 'Avenida da Vitamina, 242 - Penha',
-//       valor: 2500,
-//       alugado: true,
-//       capacity: 3,
-//       contrato: ''
-//     },
-//     {
-//       id: 10,
-//       endereco: 'Rua João Carlos Macedo, 42 - Santa Cruz',
-//       valor: 2600,
-//       alugado: false,
-//       capacity: 2,
-//       contrato: ''
-//     },
-//     {
-//       id: 11,
-//       endereco: 'Rua Magalhaes, 180 - Vila Clementino',
-//       valor: 1400,
-//       alugado: true,
-//       capacity: 2,
-//       contrato: ''
-//     }
-//   )
-// }
-
-// populateDb()
 
 module.exports = function(app) {
 
@@ -140,8 +48,6 @@ module.exports = function(app) {
       state: 2.3
     }
   )
-
-
 
   app.get('/', (req, res) => {
     res.send('ola turma')
@@ -202,7 +108,6 @@ module.exports = function(app) {
       }
       else{
 
-
         text.forEach(function(value2, index){
 
           if(palavras.indexOf(value2) == -1){
@@ -221,6 +126,25 @@ module.exports = function(app) {
     })
 
     res.send('Não entendi o seu caso! Pode explicar com mais detalhes?')
+
+  })
+
+  app.get('/add_message', (req, res) => {
+    
+    var msg = req.query.msg
+    var name = req.query.name
+
+    db.conversation.push({
+      msg, name
+    })
+
+    res.send('1')
+
+  })
+
+  app.get('/get_conversation', (req, res) => {
+
+    res.send(db.conversation)
 
   })
 
@@ -432,6 +356,10 @@ module.exports = function(app) {
 
   app.get('/dashboard', function(req, res){
     res.render('dashboard')
+  })
+
+  app.get('/conversa', function(req, res){
+    res.render('conversa')
   })
 
 }
