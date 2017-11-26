@@ -8,6 +8,28 @@ block content
       margin:0 auto;
     }
 
+    #conversation{
+
+      height:500px;
+      overflow:auto;
+      background:ghostwhite;
+    }
+
+    #chat{
+      width: 100%
+    }
+
+    #name{
+      margin-bottom:15px;
+    }
+
+    #enviar{
+      background: gainsboro
+    }
+
+    body{
+      padding:50px;
+    }
   
   script(type="text/javascript").
   
@@ -35,6 +57,11 @@ block content
 
       })
 
+      window.setInterval(function() {
+        var elem = document.getElementById('conversation');
+        elem.scrollTop = elem.scrollHeight;
+      }, 150);
+
       setInterval(function(){
 
         var promise = $.ajax({
@@ -52,7 +79,7 @@ block content
 
             html += '<h3h1>' + value.name + ':</h3><br />'
             html += '<span>' + value.msg + '</span>'
-            html += '<br /><br />'
+            html += '<hr />'
 
           })
 
@@ -69,7 +96,7 @@ block content
     })  
 
   
-  .container
+  div(style=)
     //- div(class='col-xs-5' id='container_login_main')
     //-   div(class='panel panel-default' id='container_login')
     //-     .panel-heading
@@ -88,6 +115,8 @@ block content
     //-           input.btn.btn-lg.btn-success.btn-block.btn-login(type='submit', value='Login')
     input(type='text' id='name' placeholder="Nome Usuario")
     br
-    div(id='conversation' style="min-height:150px")
+    div(id='conversation')
     br
-    textarea(id='chat' style="width:500px;")
+    textarea(id='chat')
+    br
+    input(id='enviar' type='button' value="Enviar")
