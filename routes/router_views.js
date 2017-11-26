@@ -148,6 +148,12 @@ module.exports = function(app) {
 
   })
 
+  app.get('/reset_chat', (req, res) => {
+
+    db.conversation = []
+
+  })
+
   // Adicionar um interesse em um imovel
   app.post('/add_interest', (req, res) => {
 
