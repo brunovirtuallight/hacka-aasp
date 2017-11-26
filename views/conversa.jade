@@ -57,6 +57,25 @@ block content
 
       })
 
+      $('#enviar').click(function(e){
+
+        e.preventDefault()
+
+        var msg = $(this).val()
+        var name = $('#name').val()
+
+        $.ajax({
+          url: 'add_message',
+          data:{
+            msg:msg,
+            name:name
+          }
+        })
+
+        $(this).val('')
+
+      })
+
       window.setInterval(function() {
         var elem = document.getElementById('conversation');
         elem.scrollTop = elem.scrollHeight;
