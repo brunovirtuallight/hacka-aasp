@@ -15,106 +15,213 @@ function getRandomArbitrary(min, max) {
 
 }
 
-function populateDb(){
+// function populateDb(){
 
-  db.property.push(
-    {
-      id: 1,
-      endereco: 'Rua Capitão Macedo, 42 - Vila Clementino',
-      valor: 3000,
-      alugado: false,
-      capacity: 3,
-      contrato: ''
-    },
-    {
-      id: 2,
-      endereco: 'Rua Arnold Astor Ferreira, 158 - Morumbi',
-      valor: 4200,
-      alugado: true,
-      capacity: 3,
-      contrato: ''
-    },
-    {
-      id: 3,
-      endereco: 'Avenida Joao Dias, 56 - Ana Rosa',
-      valor: 3000,
-      alugado: false,
-      capacity: 2,
-      contrato: ''
-    },
-    {
-      id: 4,
-      endereco: 'Rua Elionor Arantes, 1852 - Santo Amaro',
-      valor: 1500,
-      alugado: false,
-      capacity: 2,
-      contrato: ''
-    },
-    {
-      id: 5,
-      endereco: 'Rua Antonio Gilmedes, 147 - Jabaquara',
-      valor: 2200,
-      alugado: true,
-      capacity: 3,
-      contrato: ''
-    },
-    {
-      id: 6,
-      endereco: 'Avenida Sergio Lobo, 23 - Jabaquara',
-      valor: 1620,
-      alugado: true,
-      capacity: 2,
-      contrato: ''
-    },
-    {
-      id: 7,
-      endereco: 'Rua Tartaruga, 266 - São Caetano',
-      valor: 3900,
-      alugado: false,
-      capacity: 4,
-      contrato: ''
-    },
-    {
-      id: 8,
-      endereco: 'Rua Bundança, 39 - Tatuapé',
-      valor: 2500,
-      alugado: true,
-      capacity: 3,
-      contrato: ''
-    },
-    {
-      id: 9,
-      endereco: 'Avenida da Vitamina, 242 - Penha',
-      valor: 2500,
-      alugado: true,
-      capacity: 3,
-      contrato: ''
-    },
-    {
-      id: 10,
-      endereco: 'Rua João Carlos Macedo, 42 - Santa Cruz',
-      valor: 2600,
-      alugado: false,
-      capacity: 2,
-      contrato: ''
-    },
-    {
-      id: 11,
-      endereco: 'Rua Magalhaes, 180 - Vila Clementino',
-      valor: 1400,
-      alugado: true,
-      capacity: 2,
-      contrato: ''
-    }
-  )
-}
+//   db.property.push(
+//     {
+//       id: 1,
+//       endereco: 'Rua Capitão Macedo, 42 - Vila Clementino',
+//       valor: 3000,
+//       alugado: false,
+//       capacity: 3,
+//       contrato: ''
+//     },
+//     {
+//       id: 2,
+//       endereco: 'Rua Arnold Astor Ferreira, 158 - Morumbi',
+//       valor: 4200,
+//       alugado: true,
+//       capacity: 3,
+//       contrato: ''
+//     },
+//     {
+//       id: 3,
+//       endereco: 'Avenida Joao Dias, 56 - Ana Rosa',
+//       valor: 3000,
+//       alugado: false,
+//       capacity: 2,
+//       contrato: ''
+//     },
+//     {
+//       id: 4,
+//       endereco: 'Rua Elionor Arantes, 1852 - Santo Amaro',
+//       valor: 1500,
+//       alugado: false,
+//       capacity: 2,
+//       contrato: ''
+//     },
+//     {
+//       id: 5,
+//       endereco: 'Rua Antonio Gilmedes, 147 - Jabaquara',
+//       valor: 2200,
+//       alugado: true,
+//       capacity: 3,
+//       contrato: ''
+//     },
+//     {
+//       id: 6,
+//       endereco: 'Avenida Sergio Lobo, 23 - Jabaquara',
+//       valor: 1620,
+//       alugado: true,
+//       capacity: 2,
+//       contrato: ''
+//     },
+//     {
+//       id: 7,
+//       endereco: 'Rua Tartaruga, 266 - São Caetano',
+//       valor: 3900,
+//       alugado: false,
+//       capacity: 4,
+//       contrato: ''
+//     },
+//     {
+//       id: 8,
+//       endereco: 'Rua Bundança, 39 - Tatuapé',
+//       valor: 2500,
+//       alugado: true,
+//       capacity: 3,
+//       contrato: ''
+//     },
+//     {
+//       id: 9,
+//       endereco: 'Avenida da Vitamina, 242 - Penha',
+//       valor: 2500,
+//       alugado: true,
+//       capacity: 3,
+//       contrato: ''
+//     },
+//     {
+//       id: 10,
+//       endereco: 'Rua João Carlos Macedo, 42 - Santa Cruz',
+//       valor: 2600,
+//       alugado: false,
+//       capacity: 2,
+//       contrato: ''
+//     },
+//     {
+//       id: 11,
+//       endereco: 'Rua Magalhaes, 180 - Vila Clementino',
+//       valor: 1400,
+//       alugado: true,
+//       capacity: 2,
+//       contrato: ''
+//     }
+//   )
+// }
 
-populateDb()
+// populateDb()
 
 module.exports = function(app) {
 
+  var frases = []
+  var curState = 0
+
+  frases.push(
+    {
+      palavras: 'conta,indevida,indevido,recebi conta indevida,cobranca',
+      resposta: 'Ok! Qual o valor da conta?',
+      state: 1
+    },
+    {
+      palavras: '[Number]',
+      where: '<=100',
+      resposta: 'Acho que o valor de [Number] não é muito viavel para iniciar um processo! Tem certeza que deseja prosseguir?',
+      state: 2.1
+    },
+    {
+      palavras: '[Number]',
+      where: '>100',
+      resposta: 'OK! Iremos prosseguir com o andamento do processo',
+      state: 2.2
+    },
+    {
+      palavras: 'sim,Sim,SIM',
+      resposta: 'OK! Iremos prosseguir com o andamento do processo',
+      state: 2.3
+    }
+  )
+
+
+
   app.get('/', (req, res) => {
     res.send('ola turma')
+  })
+
+  app.get('/chat', (req, res) => {
+
+    var text = req.query.text.split(' ')
+    var total = text.length
+
+    console.log(text)
+
+    frases.forEach(function(value, index){
+
+      var palavras = value.palavras
+      var resposta = value.resposta
+
+      if(total == 1){
+
+        if(palavras == '[Number]'){
+
+          try{
+  
+            var analise = eval(text + '' + value.where)
+
+            console.log(analise)
+
+            if(analise){
+
+              var resp = resposta.replace('[Number]', text)
+              res.send(resp)
+              return
+
+            }
+
+          }
+          catch(e){
+
+          }
+        }
+        else{
+
+          text.forEach(function(value2, index){
+
+            if(palavras.indexOf(value2) != -1){
+              res.send(resposta)
+              return
+            }
+
+          })
+
+
+        }
+
+        curState = value.state
+        console.log(curState)
+
+      }
+      else{
+
+
+        text.forEach(function(value2, index){
+
+          if(palavras.indexOf(value2) == -1){
+            res.send(resposta)
+            return
+          }
+
+        })
+
+        curState = value.state
+        console.log(curState)
+
+      }
+
+
+    })
+
+    res.send('Não entendi o seu caso! Pode explicar com mais detalhes?')
+
   })
 
   // Adicionar um interesse em um imovel
